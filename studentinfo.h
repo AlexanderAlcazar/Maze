@@ -4,8 +4,8 @@
 
 //Insert your name is student id, letters and numbers only".
 namespace StudentInfo {
-	std::string Name() { return ""; }
-	std::string ID() { return ""; }
+	std::string Name() { return "Alexander Alcazar"; }
+	std::string ID() { return "1567097"; }
 };
 
 #endif
