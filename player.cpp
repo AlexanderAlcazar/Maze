@@ -104,6 +104,40 @@ void Player::say() {
 void Player::update() { 
 
 	/*   TODO   */
+    if(state() == State::LOOK) {
+    	Room target = getTargetRoom();
+    	m_lookingPaper.pop();
+
+        Room west = target + Room(-1, 0);
+	    Room east = target + Room(1, 0);
+       	Room north = target + Room(0, -1);
+        Room south = target + Room(0, 1);
+    	if(maze()->open(west)){
+    		if(m_discoveredRooms.search(west) == -42){
+    			m_lookingPaper.push(west);
+    			m_discoveredRooms.add_front(west);
+    		}
+    	}
+    	if(maze()->open(east)){
+    		if(m_discoveredRooms.search(east) == -42){
+    			m_lookingPaper.push(east);
+    			m_discoveredRooms.add_front(east);
+    		}
+    	}
+    	if(maze()->open(north)){
+    		if(m_discoveredRooms.search(north) == -42){
+    			m_lookingPaper.push(north);
+    			m_discoveredRooms.add_front(north);
+    		}
+    	}
+    	if(maze()->open(south)){
+           	if(m_discoveredRooms.search(south) == -42){
+				m_lookingPaper.push(south);
+           		m_discoveredRooms.add_front(south);
+            }
+        }
+    }
+
 
 	if (BACKTRACKENABLED) {
 		// Set by the settings file, if BACKTRACKENABLED is false, then

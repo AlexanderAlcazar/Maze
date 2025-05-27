@@ -55,6 +55,42 @@ build CMakeFiles/Maze.dir/main.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/U
   OBJECT_DIR = CMakeFiles\Maze.dir
   OBJECT_FILE_DIR = CMakeFiles\Maze.dir
 
+build CMakeFiles/Maze.dir/maze.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/maze.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\maze.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
+build CMakeFiles/Maze.dir/room.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/room.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\room.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
+build CMakeFiles/Maze.dir/player.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/player.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\player.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
+build CMakeFiles/Maze.dir/entity.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/entity.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\entity.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
+build CMakeFiles/Maze.dir/game.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/game.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\game.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
+build CMakeFiles/Maze.dir/shark.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/Users/alcaz/CLionProjects/Maze/shark.cpp || cmake_object_order_depends_target_Maze
+  DEP_FILE = CMakeFiles\Maze.dir\shark.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Maze.dir
+  OBJECT_FILE_DIR = CMakeFiles\Maze.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Maze
@@ -63,11 +99,11 @@ build CMakeFiles/Maze.dir/main.cpp.obj: CXX_COMPILER__Maze_unscanned_Debug C$:/U
 #############################################
 # Link the executable Maze.exe
 
-build Maze.exe: CXX_EXECUTABLE_LINKER__Maze_Debug CMakeFiles/Maze.dir/main.cpp.obj
+build Maze.exe: CXX_EXECUTABLE_LINKER__Maze_Debug CMakeFiles/Maze.dir/main.cpp.obj CMakeFiles/Maze.dir/maze.cpp.obj CMakeFiles/Maze.dir/room.cpp.obj CMakeFiles/Maze.dir/player.cpp.obj CMakeFiles/Maze.dir/entity.cpp.obj CMakeFiles/Maze.dir/game.cpp.obj CMakeFiles/Maze.dir/shark.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Maze.dir
-  POST_BUILD = cd .
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\alcaz\CLionProjects\Maze\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -E copy C:/Users/alcaz/CLionProjects/Maze/settings.ini C:/Users/alcaz/CLionProjects/Maze/cmake-build-debug/settings.ini && cd /D C:\Users\alcaz\CLionProjects\Maze\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -E copy C:/Users/alcaz/CLionProjects/Maze/maze_lecture.txt C:/Users/alcaz/CLionProjects/Maze/cmake-build-debug/maze_lecture.txt"
   PRE_LINK = cd .
   TARGET_FILE = Maze.exe
   TARGET_IMPLIB = libMaze.dll.a
