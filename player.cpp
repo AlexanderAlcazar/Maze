@@ -103,75 +103,76 @@ void Player::say() {
 // Update function
 void Player::update() { 
 
-	/*   TODO   */
-	if (state() == State::BACKTRACK) {
-		if (!m_btStack.empty()) {
-			Room target = m_btStack.peek();
-			m_btStack.pop();
-			move(target);
-		}
-	}
-    if(state() == State::LOOK) {
-		//when player is constructed, m_lookingPaper is initialized with one room
-    	Room target = getTargetRoom();
-    	m_lookingPaper.pop();
-    	m_btStack.push(room());
-    	move(target);
-
-    	if (maze()->foundExit(target)) {
-    		state(State::EXIT);
-    		return;
-    	}
-
-        Room west = target + Room(-1, 0);
-	    Room east = target + Room(1, 0);
-       	Room north = target + Room(0, -1);
-        Room south = target + Room(0, 1);
-    	if(maze()->open(west)){
-    		if(m_discoveredRooms.search(west) == -42){
-    			m_lookingPaper.push(west);
-    			m_discoveredRooms.add_front(west);
-    		}
-    	}
-    	if(maze()->open(east)){
-    		if(m_discoveredRooms.search(east) == -42){
-    			m_lookingPaper.push(east);
-    			m_discoveredRooms.add_front(east);
-    		}
-    	}
-    	if(maze()->open(north)){
-    		if(m_discoveredRooms.search(north) == -42){
-    			m_lookingPaper.push(north);
-    			m_discoveredRooms.add_front(north);
-    		}
-    	}
-    	if(maze()->open(south)){
-           	if(m_discoveredRooms.search(south) == -42){
-				m_lookingPaper.push(south);
-           		m_discoveredRooms.add_front(south);
-            }
-        }
-    	if (m_lookingPaper.empty()) {
-    		state(State::NOEXIT);
-    		return;
-    	}
-    }
-
-
 	if (BACKTRACKENABLED) {
 		// Set by the settings file, if BACKTRACKENABLED is false, then
 		// your program should behave exactly as seen in the slides or
 		// example executables (with teleporting).
 		// You may have multiple branching statements like this.
 		// if(BACKTRACKENABLED) { ... code relating to backtracking
-		if (!room().adjacent(m_lookingPaper.peek())) {
+
+		bool adjacent = room().adjacent(m_lookingPaper.peek());
+
+		if (!adjacent)
 			state(State::BACKTRACK);
-		} else {
+
+	}
+
+	if (state() == State::BACKTRACK) {
+		if (room() == m_btStack.peek())
+			m_btStack.pop();
+		Room target = m_btStack.peek();
+		m_btStack.pop();
+		move(target);
+		if (m_btStack.empty()) {
 			state(State::LOOK);
+			return;
+		}
+	}
+	if(state() == State::LOOK) {
+		//when player is constructed, m_lookingPaper is initialized with one room
+		Room target = getTargetRoom();
+		m_lookingPaper.pop();
+		if (BACKTRACKENABLED)
+			m_btStack.push(target);
+		move(target);
+
+		if (maze()->foundExit(target)) {
+			state(State::EXIT);
+			return;
 		}
 
-
-
+		Room west = target + Room(-1, 0);
+		Room east = target + Room(1, 0);
+		Room north = target + Room(0, -1);
+		Room south = target + Room(0, 1);
+		if(maze()->open(west)){
+			if(m_discoveredRooms.search(west) == -42){
+				m_lookingPaper.push(west);
+				m_discoveredRooms.add_front(west);
+			}
+		}
+		if(maze()->open(east)){
+			if(m_discoveredRooms.search(east) == -42){
+				m_lookingPaper.push(east);
+				m_discoveredRooms.add_front(east);
+			}
+		}
+		if(maze()->open(north)){
+			if(m_discoveredRooms.search(north) == -42){
+				m_lookingPaper.push(north);
+				m_discoveredRooms.add_front(north);
+			}
+		}
+		if(maze()->open(south)){
+			if(m_discoveredRooms.search(south) == -42){
+				m_lookingPaper.push(south);
+				m_discoveredRooms.add_front(south);
+			}
+		}
+		if (m_lookingPaper.empty()) {
+			state(State::NOEXIT);
+			return;
+		}
 	}
 
 
