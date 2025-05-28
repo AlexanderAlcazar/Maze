@@ -104,9 +104,24 @@ void Player::say() {
 void Player::update() { 
 
 	/*   TODO   */
+	if (state() == State::BACKTRACK) {
+		if (!m_btStack.empty()) {
+			Room target = m_btStack.peek();
+			m_btStack.pop();
+			move(target);
+		}
+	}
     if(state() == State::LOOK) {
+		//when player is constructed, m_lookingPaper is initialized with one room
     	Room target = getTargetRoom();
     	m_lookingPaper.pop();
+    	m_btStack.push(room());
+    	move(target);
+
+    	if (maze()->foundExit(target)) {
+    		state(State::EXIT);
+    		return;
+    	}
 
         Room west = target + Room(-1, 0);
 	    Room east = target + Room(1, 0);
@@ -136,6 +151,10 @@ void Player::update() {
            		m_discoveredRooms.add_front(south);
             }
         }
+    	if (m_lookingPaper.empty()) {
+    		state(State::NOEXIT);
+    		return;
+    	}
     }
 
 
@@ -144,7 +163,14 @@ void Player::update() {
 		// your program should behave exactly as seen in the slides or
 		// example executables (with teleporting).
 		// You may have multiple branching statements like this.
-		// if(BACKTRACKENABLED) { ... code relating to backtracking 
+		// if(BACKTRACKENABLED) { ... code relating to backtracking
+		if (!room().adjacent(m_lookingPaper.peek())) {
+			state(State::BACKTRACK);
+		} else {
+			state(State::LOOK);
+		}
+
+
 
 	}
 
