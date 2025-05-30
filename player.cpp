@@ -120,7 +120,6 @@ void Player::update() {
             bool adjacent = room().adjacent(m_lookingPaper.peek());
             if (m_btStack.empty() || adjacent) {
                 state(State::LOOK);
-                return;
             }
             break;
         }
