@@ -113,10 +113,11 @@ void Player::update() {
         case State::NOEXIT:
             return;
         case State::BACKTRACK: {
+            // Backtrack to the previous room
             Room previous = m_btStack.peek();
             m_btStack.pop();
             move(previous);
-
+            // If the backtrack stack is empty, or  then we are done backtracking
             bool adjacent = room().adjacent(m_lookingPaper.peek());
             if (m_btStack.empty() || adjacent) {
                 state(State::LOOK);
@@ -126,19 +127,18 @@ void Player::update() {
         case State::LOOK: {
             Room target = getTargetRoom();
             m_lookingPaper.pop();
-            if (BACKTRACKENABLED)
-                m_btStack.push(room());
             move(target);
-
+            //check if current room is the exit
             if (maze()->foundExit(target)) {
                 state(State::EXIT);
                 return;
             }
-
+            //initialize the directions to check
             Room direction[] = {
                 target + Room(-1, 0), target + Room(1, 0),
                 target + Room(0, -1), target + Room(0, 1)
             };
+            // Check all four directions for open rooms
             for (int i = 0; i < 4; i++) {
                 if (maze()->open(direction[i]) &&
                     m_discoveredRooms.search(direction[i]) == -42) {
@@ -146,15 +146,19 @@ void Player::update() {
                     m_discoveredRooms.add_front(direction[i]);
                 }
             }
-
+            //checks if player is stuck
             if (m_lookingPaper.empty()) {
                 state(State::NOEXIT);
                 return;
             }
-
-            bool adjacent = room().adjacent(m_lookingPaper.peek());
-            if (!adjacent)
-                state(State::BACKTRACK);
+            if (BACKTRACKENABLED) {
+                // Save current room to backtrack later
+                m_btStack.push(room());
+                // check if the next target is not adjacent
+                bool adjacent = room().adjacent(m_lookingPaper.peek());
+                if (!adjacent)
+                    state(State::BACKTRACK);
+            }
             break;
         }
     }
