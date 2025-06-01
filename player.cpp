@@ -100,13 +100,7 @@ void Player::say() {
 //		Make sure the STATE::LOOK aspect compiles and works first.
 // Update function
 void Player::update() {
-    if (BACKTRACKENABLED) {
-        // Set by the settings file, if BACKTRACKENABLED is false, then
-        // your program should behave exactly as seen in the slides or
-        // example executables (with teleporting).
-        // You may have multiple branching statements like this.
-        // if(BACKTRACKENABLED) { ... code relating to backtracking
-    }
+
     switch (state()) {
         case State::EXIT:
             return;
@@ -127,6 +121,9 @@ void Player::update() {
         case State::LOOK: {
             Room target = getTargetRoom();
             m_lookingPaper.pop();
+            if (BACKTRACKENABLED)
+                // Save current room to backtrack later
+                m_btStack.push(room());
             move(target);
             //check if current room is the exit
             if (maze()->foundExit(target)) {
@@ -152,8 +149,6 @@ void Player::update() {
                 return;
             }
             if (BACKTRACKENABLED) {
-                // Save current room to backtrack later
-                m_btStack.push(room());
                 // check if the next target is not adjacent
                 bool adjacent = room().adjacent(m_lookingPaper.peek());
                 if (!adjacent)
